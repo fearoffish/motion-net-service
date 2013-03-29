@@ -1,4 +1,9 @@
 class NetService
+  def self.from_ns_net_service(ns_net_service)
+    @net_service = ns_net_service
+    @net_service.setDelegate(self)
+  end
+  
   def initialize(name, options = {})
     default_options = {
       domain: "",

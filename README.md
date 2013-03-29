@@ -21,7 +21,7 @@ gem 'motion-net-service'
 Publishing a NetService (Bonjour) service:
 
 ```ruby
-@service = NetService.new(name: "amazaballs", port: 4321, sear).tap do |ns|
+@service = NetService.new(name: "amazaballs", port: 4321).tap do |ns|
   ns.on_did_publish do
     puts "I published a service"
   end

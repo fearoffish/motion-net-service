@@ -8,8 +8,6 @@ class NetService
     
     @net_service = NSNetService.alloc.initWithDomain options[:domain], type:options[:type], name:name, port:options[:port]
     @net_service.setDelegate(self)
-    
-    yield self if block_given?
   end
   
   def publish

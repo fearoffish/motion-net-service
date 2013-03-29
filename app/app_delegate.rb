@@ -1,6 +1,6 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    @shit = NetService.new("foobar", :port => 8080) do |ns|
+    @service = NetService.new("foobar", :port => 8080) do |ns|
       ns.on_did_publish do
         puts "HELLO"
       end
@@ -8,6 +8,7 @@ class AppDelegate
       
       end
     end
+    @service.publish
     true
   end
 end

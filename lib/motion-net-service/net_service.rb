@@ -2,7 +2,7 @@ class NetService
   def initialize(options = {})
     default_options = {
       domain: "",
-      type: "_http._tcp.",
+      search_type: "_http._tcp.",
     }
     options.merge!(default_options)
 
@@ -11,9 +11,9 @@ class NetService
     else
       @net_service = NSNetService.alloc.initWithDomain(
         options[:domain],
-        type:options[:type],
-        name:options[:name],
-        port:options[:port]
+        type: options[:search_type],
+        name: options[:name],
+        port: options[:port]
       )
     end
 
@@ -39,6 +39,14 @@ class NetService
   ].each do |callback|
     define_method callback do |&block|
       instance_variable_set("@#{callback}", block)
+    end
+  end
+
+  def method_missing(method, *args)
+    if @net_service.respond_to? method
+      @net_service.send(method, *args)
+    else
+      super
     end
   end
 

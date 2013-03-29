@@ -12,9 +12,8 @@ class AppDelegate
 
     p "SEARCHING NOW."
     @n = NetServiceBrowser.search('_ssh._tcp') do |service, more_coming|
-      s = service.instance_variable_get(:@net_service)
-      p "name: #{s.name}, addresses: #{s.addresses.first}"
-      p "SERVICE FOUND: #{s.hostName}"
+      p "name: #{service.name}, addresses: #{service.addresses.first}"
+      p "SERVICE FOUND: #{service.hostName}"
       p "MORE COMING: #{more_coming}"
     end
     true

@@ -1,5 +1,5 @@
 class NetService
-  def initialize(name, options = {})
+  def initialize(options = {})
     default_options = {
       domain: "",
       type: "_http._tcp.",
@@ -9,14 +9,19 @@ class NetService
     if options[:net_service]
       @net_service = options[:net_service]
     else
-      @net_service = NSNetService.alloc.initWithDomain options[:domain], type:options[:type], name:name, port:options[:port]
+      @net_service = NSNetService.alloc.initWithDomain(
+        options[:domain],
+        type:options[:type],
+        name:options[:name],
+        port:options[:port]
+      )
     end
 
     @net_service.setDelegate(self)
   end
 
   def self.from_ns_net_service(ns_net_service)
-    new('', :net_service => ns_net_service)
+    new(:net_service => ns_net_service)
   end
 
   def publish
@@ -61,10 +66,6 @@ protected
   def netServiceDidResolveAddress(sender)
     @on_did_resolve_address.call if @on_did_resolve_address
   end
-
-  # def netService(sender, didUpdateTXTRecordData:data)
-  #   @on_did_update_txt_record_data.call(data) if @on_did_update_txt_record_data
-  # end
 
   def netServiceDidStop(sender)
     @on_did_stop.call if @on_did_stop

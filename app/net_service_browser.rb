@@ -20,6 +20,12 @@ class NetServiceBrowser
     end
   end
 
+  def self.search(search_type, options={}, &block)
+    NetServiceBrowser.new(search_type, options).tap do |browser|
+      browser.search(&block)
+    end
+  end
+
   def search(&block)
     if block
       on_did_find_service do |service, more_coming|
@@ -36,6 +42,6 @@ class NetServiceBrowser
   end
 
   def netServiceBrowser(netServiceBrowser, didNotSearch: errorInfo)
-    p errorInfo
+    @on_did_not_search.call(errorInfo) if @on_did_not_search
   end
 end

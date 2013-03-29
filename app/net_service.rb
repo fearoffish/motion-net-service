@@ -1,9 +1,4 @@
 class NetService
-  def self.from_ns_net_service(ns_net_service)
-    @net_service = ns_net_service
-    @net_service.setDelegate(self)
-  end
-  
   def initialize(name, options = {})
     default_options = {
       domain: "",
@@ -11,8 +6,17 @@ class NetService
     }
     options.merge!(default_options)
     
-    @net_service = NSNetService.alloc.initWithDomain options[:domain], type:options[:type], name:name, port:options[:port]
+    if options[:net_service]
+      @net_service = options[:net_service]
+    else
+      @net_service = NSNetService.alloc.initWithDomain options[:domain], type:options[:type], name:name, port:options[:port]
+    end
+    
     @net_service.setDelegate(self)
+  end
+  
+  def self.from_ns_net_service(ns_net_service)
+    new(:net_service => ns_net_service)
   end
   
   def publish

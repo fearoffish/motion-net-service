@@ -18,6 +18,8 @@ class NetService
     end
 
     @net_service.setDelegate(self)
+
+    yield self if block_given?
   end
 
   def self.from_ns_net_service(ns_net_service)

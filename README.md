@@ -37,7 +37,7 @@ Consuming a service
 
 ```ruby
 @n = NetServiceBrowser.search('_ssh._tcp') do |service, more_coming|
-  p "name: #{service.name}
+  p "name: #{service.name}"
   p "service url: #{service.hostName}:#{service.port}"
   p "More coming?: #{more_coming}"
 end

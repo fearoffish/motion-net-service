@@ -23,7 +23,8 @@ class NetService
     @net_service.publish
   end
 
-  def resolve(timeout = 1)
+  def resolve(timeout = 1, &block)
+    on_did_resolve_address(&block) if block
     @net_service.resolveWithTimeout(timeout)
   end
 

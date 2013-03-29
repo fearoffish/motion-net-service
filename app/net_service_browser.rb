@@ -20,7 +20,14 @@ class NetServiceBrowser
     end
   end
 
-  def search
+  def search(&block)
+    if block
+      on_did_find_service do |service, more_coming|
+        service.resolve do
+          block.call(service, more_coming)
+        end
+      end
+    end
     @net_service_browser.searchForServicesOfType @options[:search_type], inDomain: @options[:domain]
   end
 
